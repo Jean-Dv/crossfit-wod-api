@@ -1,7 +1,7 @@
 {
-  "name": "moonshardapi",
+  "name": "crossfit-wod-api",
   "version": "0.0.1",
-  "description": "Api for moonshard WoW use database of Cataclysm 4.3.4",
+  "description": "",
   "main": "app.ts",
   "scripts": {
     "dev": "NODE_ENV=development DEBUG=app:* ts-node-dev app.ts",

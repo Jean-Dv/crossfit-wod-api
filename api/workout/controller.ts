@@ -1,4 +1,5 @@
 import { WorkoutService } from './service'
+import { WorkoutRequest } from './types'
 
 const workoutService = new WorkoutService()
 
@@ -13,7 +14,7 @@ export class WorkoutController {
     return 'Get an existing workout'
   }
 
-  createNewWorkout (): string {
+  createNewWorkout (NewWorkout: WorkoutRequest): string {
     const createdWorkout = workoutService.createNewWorkout()
     return 'Create a new workout'
   }

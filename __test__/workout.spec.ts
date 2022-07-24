@@ -35,10 +35,10 @@ describe(`CRUD ${routePrefix}/workouts`, () => {
       .set('Accept', 'application/json')
       .send(newWorkout)
     expect(response.statusCode).toBe(200)
-    expect(response.body.data).toContain({ name: 'Core Buster' })
+    expect(response.body.data).toMatchObject({ name: 'Core Buster' })
   })
 })
 
-afterAll(() => {
+afterEach(() => {
   server.close()
 })

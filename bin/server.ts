@@ -2,6 +2,7 @@ import express, { Application } from 'express'
 import log4js, { Log4js } from 'log4js'
 
 import { homeRouter } from '../api/home/router'
+import { workoutRouter } from '../api/workout/router'
 
 export class Server {
   public logger!: any
@@ -42,6 +43,7 @@ export class Server {
 
   private routes (): void {
     this.app.use(`${this.routePrefix}/ping`, homeRouter)
+    this.app.use(`${this.routePrefix}/workouts`, workoutRouter)
   }
 
   start (): void {

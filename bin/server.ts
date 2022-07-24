@@ -1,7 +1,7 @@
 import express, { Application } from 'express'
 import log4js, { Log4js } from 'log4js'
 
-import { homeRouter } from '../api/home/router'
+import { homeRouter } from '../api/home/routers/v1'
 
 export class Server {
   public logger!: any
@@ -21,7 +21,7 @@ export class Server {
       return Server.singletonServer
     }
     this.app = express()
-    this.routePrefix = '/api/1.0'
+    this.routePrefix = '/api/v1'
     this.config()
     this.middlewares()
     this.routes()

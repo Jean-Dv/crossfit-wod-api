@@ -1,7 +1,7 @@
 import express, { Application } from 'express'
 import log4js, { Log4js } from 'log4js'
 
-import { homeRouter } from '../api/home/routers/v1'
+import { homeRouter } from '../api/home/router'
 
 export class Server {
   public logger!: any

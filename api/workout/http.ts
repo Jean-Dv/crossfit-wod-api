@@ -33,7 +33,7 @@ export class WorkoutHttpHandler {
     const createNewWorkout = workoutController.createNewWorkout({ name, mode, equipment, exercises, trainerTips })
     return res.status(200).json({
       ok: true,
-      message: createNewWorkout
+      data: createNewWorkout
     })
   }
 

@@ -1,6 +1,9 @@
+import { Workout } from '../../services/database/Workout'
+const workout = new Workout()
 export class WorkoutService {
-  getAllWorkouts (): string {
-    return ''
+  getAllWorkouts (): object {
+    const allWorkouts = workout.getAllWorkouts()
+    return allWorkouts
   }
 
   getOneWorkout (): string {

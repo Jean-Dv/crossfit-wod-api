@@ -5,10 +5,10 @@ const workoutController = new WorkoutController()
 
 export class WorkoutHttpHandler {
   getAllWorkouts (req: Request, res: Response): Response {
-    const message = workoutController.getAllWorkouts()
+    const data = workoutController.getAllWorkouts()
     return res.status(200).json({
       ok: true,
-      message: message
+      data: data
     })
   }
 

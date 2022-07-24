@@ -7,7 +7,7 @@ export class Workout {
   }
 
   saveToDatabase (DB: object): void {
-    writeFileSync('../../services/database/db.json', JSON.stringify(DB, null, 2), {
+    writeFileSync('./db.json', JSON.stringify(DB, null, 2), {
       encoding: 'utf-8'
     })
   }

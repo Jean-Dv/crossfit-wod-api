@@ -1,5 +1,6 @@
+import { v4 } from 'uuid'
 import { WorkoutService } from './service'
-import { WorkoutRequest } from './types'
+import { NewWorkout, WorkoutRequest } from './types'
 
 const workoutService = new WorkoutService()
 
@@ -14,9 +15,15 @@ export class WorkoutController {
     return 'Get an existing workout'
   }
 
-  createNewWorkout (NewWorkout: WorkoutRequest): string {
-    const createdWorkout = workoutService.createNewWorkout()
-    return 'Create a new workout'
+  createNewWorkout (newWorkout: WorkoutRequest): NewWorkout | string {
+    const workoutToInsert = {
+      id: v4(),
+      ...newWorkout,
+      createdAt: new Date().toLocaleString('en-US', { timeZone: 'UTC' }),
+      updatedAt: new Date().toLocaleString('en-US', { timeZone: 'UTC' })
+    }
+    const createdWorkout = workoutService.createNewWorkout(workoutToInsert)
+    return createdWorkout
   }
 
   updateOneWorkout (): string {

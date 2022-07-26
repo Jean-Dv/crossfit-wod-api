@@ -44,4 +44,17 @@ describe(`CRUD ${routePrefix}/workouts`, () => {
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toMatchObject({ name: 'Dead Push-Ups' })
   })
+
+  test('should return 200 and data updated with updated date now', async () => {
+    const dataUpdate = {
+      name: 'Dead Push-Ups With Weights'
+    }
+    const response = await request(appServer)
+      .patch(`${routePrefix}/workouts/4a3d9aaa-608c-49a7-a004-66305ad4ab50`)
+      .set('Accept', 'application/json')
+      .send(dataUpdate)
+    expect(response.statusCode).toBe(200)
+    expect(response.body.data).toMatchObject(dataUpdate)
+    expect(response.body.data.updatedAt).toContain(new Date().toLocaleString('en-US', { timeZone: 'UTC' }))
+  })
 })

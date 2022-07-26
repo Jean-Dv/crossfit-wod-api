@@ -61,11 +61,17 @@ export class WorkoutHttpHandler {
     })
   }
 
-  deleteOneWorkout (req: Request, res: Response): Response {
-    const message = workoutController.deleteOneWorkout()
+  deleteOneWorkout (req: Request, res: Response): Response | undefined {
+    const {
+      params: { workoutId }
+    } = req
+    if (workoutId.length === 0) {
+      return
+    }
+    workoutController.deleteOneWorkout(workoutId)
     return res.status(200).json({
       ok: true,
-      message: message
+      message: 'Delete workout successfully!'
     })
   }
 }

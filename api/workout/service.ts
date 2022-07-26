@@ -43,7 +43,15 @@ export class WorkoutService {
     return updatedWorkout
   }
 
-  deleteOneWorkout (): string {
-    return ''
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  deleteOneWorkout (workoutId: string): void | undefined {
+    const indexForDeletion = DB.workouts.findIndex(
+      (workout) => workout.id === workoutId
+    )
+    if (indexForDeletion === -1) {
+      return undefined
+    }
+    DB.workouts.splice(indexForDeletion, 1)
+    workout.saveToDatabase(DB)
   }
 }

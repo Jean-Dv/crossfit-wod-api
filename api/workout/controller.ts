@@ -31,8 +31,7 @@ export class WorkoutController {
     return updatedWorkout
   }
 
-  deleteOneWorkout (): string {
-    workoutService.deleteOneWorkout()
-    return 'Delete an existing workout'
+  deleteOneWorkout (workoutId: string): void {
+    workoutService.deleteOneWorkout(workoutId)
   }
 }

@@ -1,4 +1,4 @@
-export interface NewWorkout {
+export interface WorkoutInterface {
   id: string
   name: string
   mode: string
@@ -9,7 +9,7 @@ export interface NewWorkout {
   updatedAt: string
 }
 
-export interface WorkoutRequest {
+export interface NewWorkout {
   name: string
   mode: string
   equipment: string[]

@@ -1,6 +1,6 @@
 import { v4 } from 'uuid'
 import { WorkoutService } from './service'
-import { NewWorkout, WorkoutRequest } from './types'
+import { NewWorkout, WorkoutInterface } from './types'
 
 const workoutService = new WorkoutService()
 
@@ -10,12 +10,12 @@ export class WorkoutController {
     return allWorkouts
   }
 
-  getOneWorkout (): string {
+  getOneWorkout (workoutId: string): string {
     const workout = workoutService.getOneWorkout()
     return 'Get an existing workout'
   }
 
-  createNewWorkout (newWorkout: WorkoutRequest): NewWorkout | string {
+  createNewWorkout (newWorkout: NewWorkout): WorkoutInterface | string {
     const workoutToInsert = {
       id: v4(),
       ...newWorkout,

@@ -13,10 +13,19 @@ export class WorkoutHttpHandler {
   }
 
   getOneWorkout (req: Request, res: Response): Response {
-    const message = workoutController.getOneWorkout()
+    const {
+      params: { workoutId }
+    } = req
+    if (workoutId.length === 0) {
+      return res.status(400).json({
+        ok: false,
+        message: 'Missing data'
+      })
+    }
+    const workout = workoutController.getOneWorkout(workoutId)
     return res.status(200).json({
       ok: true,
-      message: message
+      data: workout
     })
   }
 

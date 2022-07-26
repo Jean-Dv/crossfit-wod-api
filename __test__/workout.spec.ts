@@ -57,4 +57,11 @@ describe(`CRUD ${routePrefix}/workouts`, () => {
     expect(response.body.data).toMatchObject(dataUpdate)
     expect(response.body.data.updatedAt).toContain(new Date().toLocaleString('en-US', { timeZone: 'UTC' }))
   })
+
+  test('should return 200 and deleted workout', async () => {
+    const response = await request(appServer)
+      .delete(`${routePrefix}/workouts/4a3d9aaa-608c-49a7-a004-66305ad4ab50`)
+    expect(response.statusCode).toBe(200)
+    expect(response.body.message).toContain('Delete workout successfully!')
+  })
 })

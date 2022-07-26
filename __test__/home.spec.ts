@@ -11,6 +11,6 @@ describe(`GET ${routePrefix}/ping`, () => {
   })
 })
 
-afterAll(() => {
+afterEach(() => {
   server.close()
 })

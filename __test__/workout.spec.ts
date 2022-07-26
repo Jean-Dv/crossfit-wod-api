@@ -37,6 +37,13 @@ describe(`CRUD ${routePrefix}/workouts`, () => {
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toMatchObject({ name: 'Core Buster' })
   })
+
+  test('should return 200 and data with one workout', async () => {
+    const response = await request(appServer)
+      .get(`${routePrefix}/workouts/4a3d9aaa-608c-49a7-a004-66305ad4ab50`)
+    expect(response.statusCode).toBe(200)
+    expect(response.body.data).toMatchObject({ name: 'Dead Push-Ups' })
+  })
 })
 
 afterEach(() => {

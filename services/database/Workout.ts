@@ -1,5 +1,5 @@
 import { writeFileSync } from 'fs'
-import DB from './db.json'
+import DB from '../../db.json'
 
 export class Workout {
   getAllWorkouts (): object {
@@ -7,7 +7,7 @@ export class Workout {
   }
 
   saveToDatabase (DB: object): void {
-    writeFileSync('./db.json', JSON.stringify(DB, null, 2), {
+    writeFileSync('../../db.json', JSON.stringify(DB, null, 2), {
       encoding: 'utf-8'
     })
   }

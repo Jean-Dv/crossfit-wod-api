@@ -46,11 +46,18 @@ export class WorkoutHttpHandler {
     })
   }
 
-  updateOneWorkout (req: Request, res: Response): Response {
-    const message = workoutController.updateOneWorkout()
+  updateOneWorkout (req: Request, res: Response): Response | undefined {
+    const {
+      body,
+      params: { workoutId }
+    } = req
+    if (workoutId.length === 0) {
+      return
+    }
+    const updatedWorkout = workoutController.updateOneWorkout(workoutId, body)
     return res.status(200).json({
       ok: true,
-      message: message
+      data: updatedWorkout
     })
   }
 

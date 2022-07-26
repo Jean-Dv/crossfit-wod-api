@@ -1,5 +1,5 @@
 import { Workout } from '../../services/database/Workout'
-import DB from '../../services/database/db.json'
+import DB from '../../db.json'
 import { WorkoutInterface } from './types'
 const workout = new Workout()
 export class WorkoutService {
@@ -26,8 +26,21 @@ export class WorkoutService {
     return newWorkout
   }
 
-  updateOneWorkout (): string {
-    return ''
+  updateOneWorkout (workoutId: string, changes: Body): WorkoutInterface | undefined {
+    const indexForUpdate = DB.workouts.findIndex(
+      (workout) => workout.id === workoutId
+    )
+    if (indexForUpdate === -1) {
+      return undefined
+    }
+    const updatedWorkout = {
+      ...DB.workouts[indexForUpdate],
+      ...changes,
+      updatedAt: new Date().toLocaleString('en-US', { timeZone: 'UTC' })
+    }
+    DB.workouts[indexForUpdate] = updatedWorkout
+    workout.saveToDatabase(DB)
+    return updatedWorkout
   }
 
   deleteOneWorkout (): string {

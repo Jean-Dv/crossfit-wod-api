@@ -26,9 +26,9 @@ export class WorkoutController {
     return createdWorkout
   }
 
-  updateOneWorkout (): string {
-    const updatedWorkout = workoutService.updateOneWorkout()
-    return 'Update an existing workout'
+  updateOneWorkout (workoutId: string, changes: Body): WorkoutInterface | undefined {
+    const updatedWorkout = workoutService.updateOneWorkout(workoutId, changes)
+    return updatedWorkout
   }
 
   deleteOneWorkout (): string {

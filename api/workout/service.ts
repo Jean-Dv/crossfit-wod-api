@@ -8,8 +8,12 @@ export class WorkoutService {
     return allWorkouts
   }
 
-  getOneWorkout (): string {
-    return ''
+  getOneWorkout (workoutId: string): WorkoutInterface | string {
+    const workout = DB.workouts.find((workout) => workout.id === workoutId)
+    if (workout == null) {
+      return 'Not found'
+    }
+    return workout
   }
 
   createNewWorkout (newWorkout: WorkoutInterface): WorkoutInterface | string {

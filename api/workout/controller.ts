@@ -10,9 +10,9 @@ export class WorkoutController {
     return allWorkouts
   }
 
-  getOneWorkout (workoutId: string): string {
-    const workout = workoutService.getOneWorkout()
-    return 'Get an existing workout'
+  getOneWorkout (workoutId: string): WorkoutInterface | string {
+    const workout = workoutService.getOneWorkout(workoutId)
+    return workout
   }
 
   createNewWorkout (newWorkout: NewWorkout): WorkoutInterface | string {

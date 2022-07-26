@@ -1,6 +1,6 @@
 import request from 'supertest'
 
-import { appServer, server, routePrefix } from '../app'
+import { appServer, routePrefix } from '../app'
 
 describe(`CRUD ${routePrefix}/workouts`, () => {
   test('should return 200 and all workouts into array', async () => {
@@ -44,8 +44,4 @@ describe(`CRUD ${routePrefix}/workouts`, () => {
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toMatchObject({ name: 'Dead Push-Ups' })
   })
-})
-
-afterEach(() => {
-  server.close()
 })

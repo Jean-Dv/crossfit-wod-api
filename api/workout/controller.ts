@@ -1,14 +1,14 @@
 import { v4 } from 'uuid'
 import { CodeError } from './exception'
 import { WorkoutService } from './service'
-import { NewWorkout, WorkoutInterface } from './types'
+import { NewWorkout, WorkoutInterface, FilterParams } from './types'
 
 const workoutService = new WorkoutService()
 
 export class WorkoutController {
-  getAllWorkouts (): object {
+  getAllWorkouts (filterParams: FilterParams): object {
     try {
-      const allWorkouts = workoutService.getAllWorkouts()
+      const allWorkouts = workoutService.getAllWorkouts(filterParams)
       return allWorkouts
     } catch (error: any) {
       throw new CodeError(error)

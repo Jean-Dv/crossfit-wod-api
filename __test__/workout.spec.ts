@@ -70,6 +70,30 @@ describe(`CRUD ${routePrefix}/workouts (successfully)`, () => {
     expect(response.statusCode).toBe(200)
     expect(response.body.data[1]).toMatchObject({ record: '145 reps' })
   })
+
+  test('should return 200 and all workouts with mode specified amrap', async () => {
+    const objectExpected = [{
+      name: 'Jumping (Not) Made Easy',
+      mode: 'AMRAP 12',
+      equipment: [
+        'jump rope'
+      ],
+      exercises: [
+        '10 burpees',
+        '25 double-unders'
+      ],
+      trainerTips: [
+        'Scale to do 50 single-unders, if double-unders are too difficult'
+      ],
+      id: '8f8318f8-b869-4e9d-bb78-88010193563a',
+      createdAt: '4/25/2022, 2:45:28 PM',
+      updatedAt: '4/25/2022, 2:45:28 PM'
+    }]
+    const response = await request(appServer)
+      .get(`${routePrefix}/workouts?mode=amrap`)
+    expect(response.statusCode).toBe(200)
+    expect(response.body.data).toEqual(expect.arrayContaining(objectExpected))
+  })
 })
 
 describe(`CRUD ${routePrefix}/workouts (failed)`, () => {

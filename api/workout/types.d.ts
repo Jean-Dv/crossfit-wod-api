@@ -15,3 +15,7 @@ export interface CodeErrorHandling {
   message: any
   code: number
 }
+
+export interface FilterParams {
+  mode?: string | string[] | ParsedQs | ParsedQs[] | undefined
+}

@@ -1,14 +1,19 @@
 import { Workout } from '../../services/database/Workout'
 import DB from '../../db.json'
-import { WorkoutInterface } from './types'
+import { WorkoutInterface, FilterParams } from './types'
 import { CodeError } from './exception'
 const workout = new Workout()
 
 export class WorkoutService {
-  getAllWorkouts (): object {
+  getAllWorkouts (filterParams: FilterParams): object {
     try {
-      const allWorkouts = workout.getAllWorkouts()
-      return allWorkouts
+      const workouts = DB.workouts
+      if (filterParams.mode !== undefined) {
+        return DB.workouts.filter((workout) => {
+          return workout.mode.toLowerCase().includes(filterParams.mode)
+        })
+      }
+      return workouts
     } catch (error: any) {
       throw new CodeError(error)
     }

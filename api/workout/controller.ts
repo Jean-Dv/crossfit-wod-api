@@ -7,13 +7,21 @@ const workoutService = new WorkoutService()
 
 export class WorkoutController {
   getAllWorkouts (): object {
-    const allWorkouts = workoutService.getAllWorkouts()
-    return allWorkouts
+    try {
+      const allWorkouts = workoutService.getAllWorkouts()
+      return allWorkouts
+    } catch (error: any) {
+      throw new CodeError(error)
+    }
   }
 
   getOneWorkout (workoutId: string): WorkoutInterface | string {
-    const workout = workoutService.getOneWorkout(workoutId)
-    return workout
+    try {
+      const workout = workoutService.getOneWorkout(workoutId)
+      return workout
+    } catch (error: any) {
+      throw new CodeError(error)
+    }
   }
 
   createNewWorkout (newWorkout: NewWorkout): WorkoutInterface | string {
@@ -32,11 +40,19 @@ export class WorkoutController {
   }
 
   updateOneWorkout (workoutId: string, changes: Body): WorkoutInterface | undefined {
-    const updatedWorkout = workoutService.updateOneWorkout(workoutId, changes)
-    return updatedWorkout
+    try {
+      const updatedWorkout = workoutService.updateOneWorkout(workoutId, changes)
+      return updatedWorkout
+    } catch (error: any) {
+      throw new CodeError(error)
+    }
   }
 
   deleteOneWorkout (workoutId: string): void {
-    workoutService.deleteOneWorkout(workoutId)
+    try {
+      workoutService.deleteOneWorkout(workoutId)
+    } catch (error: any) {
+      throw new CodeError(error)
+    }
   }
 }

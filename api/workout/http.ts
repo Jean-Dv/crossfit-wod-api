@@ -5,11 +5,20 @@ const workoutController = new WorkoutController()
 
 export class WorkoutHttpHandler {
   getAllWorkouts (req: Request, res: Response): Response {
-    const data = workoutController.getAllWorkouts()
-    return res.status(200).json({
-      ok: true,
-      data: data
-    })
+    try {
+      const data = workoutController.getAllWorkouts()
+      return res.status(200).json({
+        ok: true,
+        data: data
+      })
+    } catch (error: any) {
+      return res.status(error.code !== undefined ? error.code : 500).json({
+        ok: false,
+        data: {
+          error: error.message !== undefined ? error.message : error
+        }
+      })
+    }
   }
 
   getOneWorkout (req: Request, res: Response): Response {
@@ -19,14 +28,26 @@ export class WorkoutHttpHandler {
     if (workoutId.length === 0) {
       return res.status(400).json({
         ok: false,
-        message: 'Missing data'
+        data: {
+          error:
+          "Parameter ':workoutId' can not be empty"
+        }
       })
     }
-    const workout = workoutController.getOneWorkout(workoutId)
-    return res.status(200).json({
-      ok: true,
-      data: workout
-    })
+    try {
+      const workout = workoutController.getOneWorkout(workoutId)
+      return res.status(200).json({
+        ok: true,
+        data: workout
+      })
+    } catch (error: any) {
+      return res.status(error.code !== undefined ? error.code : 500).json({
+        ok: false,
+        data: {
+          error: error.message !== undefined ? error.message : error
+        }
+      })
+    }
   }
 
   createNewWorkout (req: Request, res: Response): Response {
@@ -49,12 +70,10 @@ export class WorkoutHttpHandler {
         data: createNewWorkout
       })
     } catch (error: any) {
-      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-      return res.status(error.code || 500).json({
+      return res.status(error.code !== undefined ? error.code : 500).json({
         ok: false,
         data: {
-          // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-          error: error.message || error
+          error: error.message !== undefined ? error.message : error
         }
       })
     }
@@ -66,13 +85,28 @@ export class WorkoutHttpHandler {
       params: { workoutId }
     } = req
     if (workoutId.length === 0) {
-      return
+      return res.status(400).json({
+        ok: false,
+        data: {
+          error:
+          "Parameter ':workoutId' can not be empty"
+        }
+      })
     }
-    const updatedWorkout = workoutController.updateOneWorkout(workoutId, body)
-    return res.status(200).json({
-      ok: true,
-      data: updatedWorkout
-    })
+    try {
+      const updatedWorkout = workoutController.updateOneWorkout(workoutId, body)
+      return res.status(200).json({
+        ok: true,
+        data: updatedWorkout
+      })
+    } catch (error: any) {
+      return res.status(error.code !== undefined ? error.code : 500).json({
+        ok: false,
+        data: {
+          error: error.message !== undefined ? error.message : error
+        }
+      })
+    }
   }
 
   deleteOneWorkout (req: Request, res: Response): Response | undefined {
@@ -80,12 +114,27 @@ export class WorkoutHttpHandler {
       params: { workoutId }
     } = req
     if (workoutId.length === 0) {
-      return
+      return res.status(400).json({
+        ok: false,
+        data: {
+          error:
+          "Parameter ':workoutId' can not be empty"
+        }
+      })
     }
-    workoutController.deleteOneWorkout(workoutId)
-    return res.status(200).json({
-      ok: true,
-      message: 'Delete workout successfully!'
-    })
+    try {
+      workoutController.deleteOneWorkout(workoutId)
+      return res.status(200).json({
+        ok: true,
+        message: 'Delete workout successfully!'
+      })
+    } catch (error: any) {
+      return res.status(error.code !== undefined ? error.code : 500).json({
+        ok: false,
+        data: {
+          error: error.message !== undefined ? error.message : error
+        }
+      })
+    }
   }
 }

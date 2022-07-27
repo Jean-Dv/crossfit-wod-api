@@ -2,7 +2,7 @@ import request from 'supertest'
 
 import { appServer, routePrefix } from '../app'
 
-describe(`CRUD ${routePrefix}/workouts`, () => {
+describe(`CRUD ${routePrefix}/workouts (successfully)`, () => {
   test('should return 200 and all workouts into array', async () => {
     const response = await request(appServer)
       .get(`${routePrefix}/workouts`)
@@ -34,7 +34,7 @@ describe(`CRUD ${routePrefix}/workouts`, () => {
       .post(`${routePrefix}/workouts`)
       .set('Accept', 'application/json')
       .send(newWorkout)
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(201)
     expect(response.body.data).toMatchObject({ name: 'Core Buster' })
   })
 
@@ -55,7 +55,6 @@ describe(`CRUD ${routePrefix}/workouts`, () => {
       .send(dataUpdate)
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toMatchObject(dataUpdate)
-    expect(response.body.data.updatedAt).toContain(new Date().toLocaleString('en-US', { timeZone: 'UTC' }))
   })
 
   test('should return 200 and deleted workout', async () => {
@@ -63,5 +62,35 @@ describe(`CRUD ${routePrefix}/workouts`, () => {
       .delete(`${routePrefix}/workouts/4a3d9aaa-608c-49a7-a004-66305ad4ab50`)
     expect(response.statusCode).toBe(200)
     expect(response.body.message).toContain('Delete workout successfully!')
+  })
+})
+
+describe(`CRUD ${routePrefix}/workouts (failed)`, () => {
+  test('should return 400 and data with error specified', async () => {
+    const newWorkout = {
+      name: 'Tommy V',
+      mode: 'AMRAP 20',
+      equipment: [
+        'rack',
+        'barbell',
+        'abmat'
+      ],
+      exercises: [
+        '15 toes to bars',
+        '10 thrusters',
+        '30 abmat sit-ups'
+      ],
+      trainerTips: [
+        'Split your toes to bars into two sets maximum',
+        'Go unbroken on the thrusters',
+        'Take the abmat sit-ups as a chance to normalize your breath'
+      ]
+    }
+    const response = await request(appServer)
+      .post(`${routePrefix}/workouts`)
+      .set('Accept', 'application/json')
+      .send(newWorkout)
+    expect(response.statusCode).toBe(400)
+    expect(response.body.data.error).toContain('already exists')
   })
 })

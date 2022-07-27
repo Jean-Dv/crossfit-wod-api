@@ -2,6 +2,8 @@ import express, { Application } from 'express'
 import log4js, { Log4js } from 'log4js'
 
 import { homeRouter } from '../api/home/router'
+import { workoutRouter } from '../api/workout/router'
+import { swaggerDocs } from '../config/swagger'
 
 export class Server {
   public logger!: any
@@ -13,19 +15,23 @@ export class Server {
   private log!: Log4js
   private listen: any
 
-  private static singletonServer: Server
+  private static _instance: Server
 
-  constructor () {
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (Server.singletonServer) {
-      return Server.singletonServer
-    }
+  private constructor () {
     this.app = express()
-    this.routePrefix = '/api/1.0'
+    this.routePrefix = '/api/v1'
     this.config()
     this.middlewares()
     this.routes()
-    Server.singletonServer = this
+  }
+
+  static getInstance (): Server {
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    if (this._instance) {
+      return this._instance
+    }
+    this._instance = new Server()
+    return this._instance
   }
 
   private config (): void {
@@ -42,12 +48,16 @@ export class Server {
 
   private routes (): void {
     this.app.use(`${this.routePrefix}/ping`, homeRouter)
+    this.app.use(`${this.routePrefix}/workouts`, workoutRouter)
   }
 
   start (): void {
-    this.listen = this.app.listen(this.port, () => {
-      this.logger.info(`[*] Server is running on port ${this.port}...`)
-    })
+    if (process.env.NODE_ENV !== 'test') {
+      this.listen = this.app.listen(this.port, () => {
+        this.logger.info(`[*] Server is running on port ${this.port}...`)
+      })
+      swaggerDocs(this.app, this.port)
+    }
   }
 
   close (): void {

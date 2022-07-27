@@ -94,6 +94,32 @@ describe(`CRUD ${routePrefix}/workouts (successfully)`, () => {
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toEqual(expect.arrayContaining(objectExpected))
   })
+
+  test('shoul return 200 and all workouts with equipment required barbell', async () => {
+    const objectExpected = [{
+      id: '4a3d9aaa-608c-49a7-a004-66305ad4ab50',
+      name: 'Dead Push-Ups',
+      mode: 'AMRAP 10',
+      equipment: [
+        'barbell'
+      ],
+      exercises: [
+        '15 deadlifts',
+        '15 hand-release push-ups'
+      ],
+      createdAt: '1/25/2022, 1:15:44 PM',
+      updatedAt: '3/10/2022, 8:21:56 AM',
+      trainerTips: [
+        'Deadlifts are meant to be light and fast',
+        'Try to aim for unbroken sets',
+        'RX Weights: 135lb/95lb'
+      ]
+    }]
+    const response = await request(appServer)
+      .get(`${routePrefix}/workouts?equipment=barbell`)
+    expect(response.statusCode).toBe(200)
+    expect(response.body.data).toEqual(expect.arrayContaining(objectExpected))
+  })
 })
 
 describe(`CRUD ${routePrefix}/workouts (failed)`, () => {

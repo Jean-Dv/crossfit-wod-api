@@ -20,5 +20,5 @@ export interface CodeErrorHandling {
 
 export interface FilterParams {
   mode?: param
-  equipment: param
+  equipment?: param
 }

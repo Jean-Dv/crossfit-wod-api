@@ -3,6 +3,7 @@ import log4js, { Log4js } from 'log4js'
 
 import { homeRouter } from '../api/home/router'
 import { workoutRouter } from '../api/workout/router'
+import { swaggerDocs } from '../config/swagger'
 
 export class Server {
   public logger!: any
@@ -55,6 +56,7 @@ export class Server {
       this.listen = this.app.listen(this.port, () => {
         this.logger.info(`[*] Server is running on port ${this.port}...`)
       })
+      swaggerDocs(this.app, this.port)
     }
   }
 

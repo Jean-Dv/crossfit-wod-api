@@ -1,4 +1,5 @@
 import { v4 } from 'uuid'
+import { CodeError } from './exception'
 import { WorkoutService } from './service'
 import { NewWorkout, WorkoutInterface } from './types'
 
@@ -22,8 +23,12 @@ export class WorkoutController {
       createdAt: new Date().toLocaleString('en-US', { timeZone: 'UTC' }),
       updatedAt: new Date().toLocaleString('en-US', { timeZone: 'UTC' })
     }
-    const createdWorkout = workoutService.createNewWorkout(workoutToInsert)
-    return createdWorkout
+    try {
+      const createdWorkout = workoutService.createNewWorkout(workoutToInsert)
+      return createdWorkout
+    } catch (error: any) {
+      throw new CodeError(error)
+    }
   }
 
   updateOneWorkout (workoutId: string, changes: Body): WorkoutInterface | undefined {

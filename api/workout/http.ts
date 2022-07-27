@@ -36,14 +36,28 @@ export class WorkoutHttpHandler {
     if (!name || !mode || !equipment || !exercises || !trainerTips) {
       return res.status(400).json({
         ok: false,
-        message: 'Missing data'
+        data: {
+          error:
+          "One of the following keys is missing of is empty in request body: 'name', 'mode', 'equipment', 'exercises', 'trainerTips'"
+        }
       })
     }
-    const createNewWorkout = workoutController.createNewWorkout({ name, mode, equipment, exercises, trainerTips })
-    return res.status(200).json({
-      ok: true,
-      data: createNewWorkout
-    })
+    try {
+      const createNewWorkout = workoutController.createNewWorkout({ name, mode, equipment, exercises, trainerTips })
+      return res.status(201).json({
+        ok: true,
+        data: createNewWorkout
+      })
+    } catch (error: any) {
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+      return res.status(error.code || 500).json({
+        ok: false,
+        data: {
+          // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+          error: error.message || error
+        }
+      })
+    }
   }
 
   updateOneWorkout (req: Request, res: Response): Response | undefined {

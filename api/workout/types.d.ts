@@ -16,3 +16,8 @@ export interface NewWorkout {
   exercises: string[]
   trainerTips: string[]
 }
+
+export interface CodeErrorHandling {
+  message: any
+  code: number
+}

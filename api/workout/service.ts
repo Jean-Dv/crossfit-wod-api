@@ -1,7 +1,9 @@
 import { Workout } from '../../services/database/Workout'
 import DB from '../../db.json'
 import { WorkoutInterface } from './types'
+import { CodeError } from './exception'
 const workout = new Workout()
+
 export class WorkoutService {
   getAllWorkouts (): object {
     const allWorkouts = workout.getAllWorkouts()
@@ -16,14 +18,18 @@ export class WorkoutService {
     return workout
   }
 
-  createNewWorkout (newWorkout: WorkoutInterface): WorkoutInterface | string {
+  createNewWorkout (newWorkout: WorkoutInterface): WorkoutInterface {
     const isAlreadyAdded = DB.workouts.findIndex((workout) => workout.name === newWorkout.name) > -1
     if (isAlreadyAdded) {
-      return ''
+      throw new CodeError({ message: `Workout with the name '${newWorkout.name}' already exists`, code: 400 })
     }
-    DB.workouts.push(newWorkout)
-    workout.saveToDatabase(DB)
-    return newWorkout
+    try {
+      DB.workouts.push(newWorkout)
+      workout.saveToDatabase(DB)
+      return newWorkout
+    } catch (error) {
+      throw new CodeError({ message: error, code: 500 })
+    }
   }
 
   updateOneWorkout (workoutId: string, changes: Body): WorkoutInterface | undefined {

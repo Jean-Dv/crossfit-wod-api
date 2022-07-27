@@ -63,6 +63,13 @@ describe(`CRUD ${routePrefix}/workouts (successfully)`, () => {
     expect(response.statusCode).toBe(200)
     expect(response.body.message).toContain('Delete workout successfully!')
   })
+
+  test('should return 200 and all records reference with workout', async () => {
+    const response = await request(appServer)
+      .get(`${routePrefix}/workouts/4a3d9aaa-608c-49a7-a004-66305ad4ab50/records`)
+    expect(response.statusCode).toBe(200)
+    expect(response.body.data[1]).toMatchObject({ record: '145 reps' })
+  })
 })
 
 describe(`CRUD ${routePrefix}/workouts (failed)`, () => {

@@ -9,13 +9,7 @@ export interface WorkoutInterface {
   updatedAt: string
 }
 
-export interface NewWorkout {
-  name: string
-  mode: string
-  equipment: string[]
-  exercises: string[]
-  trainerTips: string[]
-}
+export type NewWorkout = Omit<WorkoutInterface, 'id' | 'createdAt' | 'updatedAt'>
 
 export interface CodeErrorHandling {
   message: any

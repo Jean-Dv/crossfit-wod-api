@@ -55,9 +55,13 @@ const workoutHttpHandler = new WorkoutHttpHandler()
  */
 workoutRouter.get('/', workoutHttpHandler.getAllWorkouts)
 
-workoutRouter.get('/:workoutId', cache('2 minutes'), workoutHttpHandler.getOneWorkout)
-
-workoutRouter.get('/:workoutId/records', cache('2 minutes'), recordHttpHandler.getRecordForWorkout)
+if (process.env.NODE_ENV === 'test') {
+  workoutRouter.get('/:workoutId', workoutHttpHandler.getOneWorkout)
+  workoutRouter.get('/:workoutId/records', recordHttpHandler.getRecordForWorkout)
+} else {
+  workoutRouter.get('/:workoutId', cache('2 minutes'), workoutHttpHandler.getOneWorkout)
+  workoutRouter.get('/:workoutId/records', cache('2 minutes'), recordHttpHandler.getRecordForWorkout)
+}
 
 workoutRouter.post('/', workoutHttpHandler.createNewWorkout)
 

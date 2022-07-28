@@ -1,3 +1,5 @@
+type param = string | string[] | ParsedQs | ParsedQs[] | undefined
+
 export interface WorkoutInterface {
   id: string
   name: string
@@ -17,5 +19,6 @@ export interface CodeErrorHandling {
 }
 
 export interface FilterParams {
-  mode?: string | string[] | ParsedQs | ParsedQs[] | undefined
+  mode?: param
+  equipment?: param
 }

@@ -13,6 +13,15 @@ export class WorkoutService {
           return workout.mode.toLowerCase().includes(filterParams.mode)
         })
       }
+      if (filterParams.equipment !== undefined) {
+        return DB.workouts.filter((workout) => {
+          const equipmentToLowerCase: string[] = []
+          workout.equipment.forEach((equipment) => {
+            equipmentToLowerCase.push(equipment.toLowerCase())
+          })
+          return equipmentToLowerCase.includes(filterParams.equipment)
+        })
+      }
       return workouts
     } catch (error: any) {
       throw new CodeError(error)

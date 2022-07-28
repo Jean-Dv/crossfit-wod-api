@@ -5,9 +5,9 @@ const workoutController = new WorkoutController()
 
 export class WorkoutHttpHandler {
   getAllWorkouts (req: Request, res: Response): Response {
-    const { mode } = req.query
+    const { mode, equipment } = req.query
     try {
-      const data = workoutController.getAllWorkouts({ mode })
+      const data = workoutController.getAllWorkouts({ mode, equipment })
       return res.status(200).json({
         ok: true,
         data: data
